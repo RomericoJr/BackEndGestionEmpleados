@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class solicitud extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'route_file',
+        'id_agregmiado'
+    ];
 }
