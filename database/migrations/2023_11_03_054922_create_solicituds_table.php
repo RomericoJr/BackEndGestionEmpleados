@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('solicituds', function (Blueprint $table) {
             $table->id();
+            $table->string('route_file');
+            $table->unsignedBigInteger('id_agregmiado');
+            $table->foreign('id_agregmiado')->references('id')->on('agregmiados');
             $table->timestamps();
         });
     }

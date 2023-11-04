@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class agregmiado extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nombre',
+        'apellido_p',
+        'apellido_m',
+        'sexo',
+        'NUP',
+        'NUE',
+        'RFC',
+        'NSS',
+        'fecha_nacimiento',
+        'telefono',
+        'cuota',
+        'id_rol'
+    ];
 }
