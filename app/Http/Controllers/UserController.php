@@ -60,6 +60,7 @@ class UserController extends Controller
                 'NUE' => 'required|string|max:10|unique:users',
                 'password'=> 'required|string|min:8',
                 'id_rol' => 'required|integer'
+
             ]);
 
             if($validateUser->fails()){
