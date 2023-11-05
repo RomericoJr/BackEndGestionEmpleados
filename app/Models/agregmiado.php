@@ -13,7 +13,7 @@ class agregmiado extends Model
         'nombre',
         'apellido_p',
         'apellido_m',
-        'sexo',
+        'id_sexo',
         'NUP',
         'NUE',
         'RFC',

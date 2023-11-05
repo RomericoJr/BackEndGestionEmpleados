@@ -16,14 +16,16 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellido_p');
             $table->string('apellido_m');
-            $table->string('sexo');
             $table->string('NUP',10);
             $table->string('NUE',10);
             $table->string('RFC',13);
             $table->string('NSS');
             $table->string('fecha_nacimiento');
-            $table->integer('telefono');
+            $table->bigInteger('telefono',);
             $table->boolean('cuota');
+
+            $table->unsignedBigInteger('id_sexo');
+            $table->foreign('id_sexo')->references('id')->on('sexes');
 
             $table->unsignedBigInteger('id_rol');
             $table->foreign('id_rol')->references('id')->on('rols');
