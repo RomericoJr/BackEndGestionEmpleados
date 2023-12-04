@@ -22,7 +22,8 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'password',
         'NUE',
-        'id_rol'
+        'id_rol',
+        'id_agregmiado'
     ];
 
     /**
@@ -55,4 +56,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return []; // Puedes agregar datos adicionales en este arreglo si lo necesitas.
     }
+
+    public function rol(){
+        return $this->belongsTo(rol::class, 'id_rol');
+    }
+
+    public function agregmiado(){
+        return $this->belongsTo(agregmiado::class, 'id_agregmiado');
+    }
+
+
 }

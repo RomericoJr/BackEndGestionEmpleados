@@ -29,6 +29,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('id_rol');
             $table->foreign('id_rol')->references('id')->on('rols');
+
             $table->timestamps();
         });
     }

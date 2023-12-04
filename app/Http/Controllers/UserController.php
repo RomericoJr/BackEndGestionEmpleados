@@ -12,9 +12,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class UserController extends Controller
 {
 
-
-
-
        /**
      * Refresh a token.
      *
@@ -110,6 +107,7 @@ class UserController extends Controller
                         ->whereColumn('id_rol','id')
                     ]
                 )
+                // ->with('agregmiado')
                 ->firstOrFail();
 
         $token = JWTAuth::fromUser($user);

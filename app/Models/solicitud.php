@@ -13,4 +13,9 @@ class solicitud extends Model
         'route_file',
         'id_agregmiado'
     ];
+
+    public function agregmiado()
+    {
+        return $this->belongsTo(agregmiado::class);
+    }
 }

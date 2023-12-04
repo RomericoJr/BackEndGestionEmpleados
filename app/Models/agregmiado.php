@@ -21,6 +21,6 @@ class agregmiado extends Model
         'fecha_nacimiento',
         'telefono',
         'cuota',
-        'id_rol'
+        'id_rol',
     ];
 }

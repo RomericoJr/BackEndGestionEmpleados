@@ -21,6 +21,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_rol');
             $table->foreign('id_rol')->references('id')->on('rols');
 
+            $table->unsignedBigInteger('id_agregmiado')->nullable();
+            $table->foreign('id_agregmiado')->references('id')->on('agregmiados');
 
             $table->timestamps();
         });

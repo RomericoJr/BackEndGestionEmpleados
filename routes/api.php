@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AgregmiadoController;
+use App\Http\Controllers\SexController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -36,11 +37,11 @@ Route::group([
     //get all Agremiados
     Route::get('getAgremiados', [AgregmiadoController::class, 'getAgregmiado']);
     //get Agremiado by id
-    Route::get('getAgremiadoById/{id}', [AgregmiadoController::class, 'getAgregmiadoById']);
+    Route::get('getAgregmiadoByNUE/{NUE}', [AgregmiadoController::class, 'getAgregmiadoByNUE']);
     //delete Agremiado by id
     Route::delete('deleteAgremiado/{id}', [AgregmiadoController::class, 'deleteAgregmiado']);
     //update Agremiado by id
-    Route::put('updateAgremiado/{id}', [AgregmiadoController::class, 'updateAgregmiado']);
+    Route::put('updateAgremiado/{nue}', [AgregmiadoController::class, 'updateAgregmiado']);
 
     //post solicitud
     Route::post('storeSolicitud', [SolicitudController::class, 'storeSolicitud']);
@@ -50,6 +51,8 @@ Route::group([
     Route::get('getSolicitudById/{id}', [SolicitudController::class, 'getSolicitudById']);
     //delete solicitud by id
     Route::delete('deleteSolicitud/{id}', [SolicitudController::class, 'deleteSolicitud']);
+
+    Route::get('getGenere', [SexController::class, 'getGenere']);
 });
 
 
