@@ -23,4 +23,10 @@ class agregmiado extends Model
         'cuota',
         'id_rol',
     ];
+
+
+    //with user
+    public function user(){
+        return $this->hasOne(User::class);
+    }
 }

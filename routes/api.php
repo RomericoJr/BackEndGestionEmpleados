@@ -6,6 +6,7 @@ use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,11 @@ Route::group([
     Route::delete('deleteSolicitud/{id}', [SolicitudController::class, 'deleteSolicitud']);
 
     Route::get('getGenere', [SexController::class, 'getGenere']);
+
+    Route::get('/descargar-solicitud/{id}', [SolicitudController::class, 'descargarSolicitud']);
+    Route::get('/descargar-solicitud/{archivo}', function ($archivo) {
+        return Storage::response($archivo);
+    })->where('archivo', '.*');
 });
 
 

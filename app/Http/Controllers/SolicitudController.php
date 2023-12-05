@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\solicitud;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\URL;
 class SolicitudController extends Controller
 {
 
     public function storeSolicitud(Request $request)
     {
-        try{
+        try {
             $request->validate([
                 'route_file' => 'required|mimes:docx,pdf,jpg',
                 'id_agregmiado' => 'required'
@@ -19,8 +19,10 @@ class SolicitudController extends Controller
 
             if ($request->hasFile('route_file')) {
                 $file = $request->file('route_file');
-                $path = Storage::path($file->store('archivos'));
-                // $file->store('archivos'); // 'archivos' es la carpeta donde se guardarán los archivos
+
+                // Almacenar la imagen en la carpeta 'public/archivos' con un nombre único
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $path = Storage::putFileAs('public/archivos', $file, $fileName);
 
                 $archivo = new solicitud;
                 $archivo->route_file = $path;
@@ -30,7 +32,6 @@ class SolicitudController extends Controller
                 return response()->json([
                     'message' => 'Archivo subido correctamente',
                     'archivo' => $archivo
-
                 ]);
             }
         } catch (\Exception $e) {
@@ -39,42 +40,22 @@ class SolicitudController extends Controller
                 'error' => $e->getMessage()
             ], 422);
         }
-        // $request->validate([
-        //     'route_file' => 'required|mimes:docx,pdf,jpg',
-        //     'id_agregmiado' => 'required'
-        // ]);
-
-        // if ($request->hasFile('route_file')) {
-        //     $file = $request->file('route_file');
-        //     $path = $file->store('archivos'); // 'archivos' es la carpeta donde se guardarán los archivos
-        //     // También puedes guardar la ruta en la base de datos si es necesario
-        //     // Ejemplo: $solicitud->route_file = $path;
-        //     // $solicitud->save();
-
-
-        //     return response()->json([
-        //         'message' => 'Archivo subido correctamente'
-
-        //     ]);
-        // }
-
-        // return response()->json(['message' => 'Error al subir el archivo'], 422);
     }
 
     public function getSolicitud()
     {
         try {
-            // $solicitudes = Solicitud::with('agregmiado')->get();
             $solicitudes = Solicitud::all();
 
-            if(is_null($solicitudes) || count($solicitudes) == 0){
+            if ($solicitudes->isEmpty()) {
                 return response()->json([
                     'message' => 'No se encontraron solicitudes'
                 ], 404);
             }
 
+            // Recorrer las solicitudes y realizar las modificaciones necesarias
             foreach ($solicitudes as $solicitud) {
-                $solicitud->route_file = Storage::url($solicitud->route_file);
+                $solicitud->route_file = asset(Storage::url($solicitud->route_file));
             }
 
             return response()->json($solicitudes);
@@ -96,6 +77,35 @@ class SolicitudController extends Controller
         $solicitud = solicitud::find($id);
         $solicitud->delete();
         return response()->json($solicitud);
+    }
+
+
+    public function descargarSolicitud($id)
+    {
+        try {
+            $solicitud = solicitud::find($id);
+
+            if (is_null($solicitud)) {
+                return response()->json([
+                    'message' => 'No se encontró la solicitud'
+                ], 404);
+            }
+
+            $fileName = 'solicitud_' . $id . '.' . pathinfo($solicitud->route_file, PATHINFO_EXTENSION);
+
+            // Obtén la URL completa del archivo de almacenamiento
+            $url = URL::to('/public/archivos/' . $fileName);
+
+            return response()->json([
+                'message' => 'Enlace de descarga generado correctamente',
+                'download_link' => $url
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al generar el enlace de descarga',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 }

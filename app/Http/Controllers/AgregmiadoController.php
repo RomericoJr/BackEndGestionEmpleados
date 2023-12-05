@@ -24,7 +24,7 @@ class AgregmiadoController extends Controller
                 'RFC' => 'required|string|max:13|unique:agregmiados',
                 'NSS' => 'required|string|max:50|unique:agregmiados',
                 'fecha_nacimiento' => 'required|string|max:255',
-                'telefono' => 'required|string|max:10|unique:agregmiados',
+                'telefono' => 'required|max:10|unique:agregmiados',
                 'cuota' => 'required|',
                 'id_rol' => 'required|'
             ]);
