@@ -45,7 +45,7 @@ class SolicitudController extends Controller
     public function getSolicitud()
     {
         try {
-            $solicitudes = Solicitud::all();
+            $solicitudes = Solicitud::with('agregmiado')->get();
 
             if ($solicitudes->isEmpty()) {
                 return response()->json([
@@ -54,6 +54,7 @@ class SolicitudController extends Controller
             }
 
             // Recorrer las solicitudes y realizar las modificaciones necesarias
+
             foreach ($solicitudes as $solicitud) {
                 $solicitud->route_file = asset(Storage::url($solicitud->route_file));
             }

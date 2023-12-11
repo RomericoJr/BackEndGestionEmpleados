@@ -16,6 +16,11 @@ class solicitud extends Model
 
     public function agregmiado()
     {
-        return $this->belongsTo(agregmiado::class);
+        return $this->belongsTo(agregmiado::class, 'id_agregmiado');
+    }
+
+    public function solicitud()
+    {
+        return $this->belongsTo(solicitud::class);
     }
 }
